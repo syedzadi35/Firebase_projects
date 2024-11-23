@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class MyButton extends StatefulWidget {
   String title;
   final VoidCallback onButtonpress;
@@ -14,7 +13,7 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       width: 250,
       child: ElevatedButton(

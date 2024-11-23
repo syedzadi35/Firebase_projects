@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_firebase/my_button.dart';
 
@@ -20,11 +19,11 @@ class _forgotState extends State<forgot> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('forgot password'),
+        title: const Text('forgot password'),
         backgroundColor: Colors.yellow,
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             TextFormField(
@@ -33,6 +32,9 @@ class _forgotState extends State<forgot> {
                   prefixIcon: Icon(Icons.email),
                   hintText: 'Email',
                   border: OutlineInputBorder()),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             MyButton(
                 title: 'send email',
@@ -48,7 +50,6 @@ class _forgotState extends State<forgot> {
                     Fluttertoast.showToast(msg: onError.toString());
                     print(onError.toString());
                   });
-                  ;
                 }),
           ],
         ),
