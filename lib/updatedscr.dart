@@ -55,7 +55,8 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
         fontSize: 16.0,
       );
 
-      Navigator.pop(context);
+      // Return true to PostScreen indicating update success
+      Navigator.pop(context, true);
     }).catchError((error) {
       setState(() {
         isUpdating = false;
@@ -102,7 +103,8 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.yellow),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.yellow),
               ),
               onPressed: isUpdating ? null : updateTask,
               child: isUpdating

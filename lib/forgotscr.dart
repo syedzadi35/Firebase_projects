@@ -28,10 +28,11 @@ class _forgotState extends State<forgot> {
           children: [
             TextFormField(
               controller: emailcontroller,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   hintText: 'Email',
-                  border: OutlineInputBorder()),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
             ),
             const SizedBox(
               height: 10,

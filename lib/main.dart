@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_firebase/post.dart';
 
+import 'package:login_firebase/splashscreen.dart';
+
 void main() async {
   await Firebase.initializeApp(
     options: const FirebaseOptions(

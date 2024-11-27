@@ -1,21 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:login_firebase/Loginscr.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'Loginscr.dart';
 
-class sighnup extends StatefulWidget {
-  sighnup({super.key});
+class Signup extends StatefulWidget {
+  Signup({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  State<sighnup> createState() => _sighnupState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _sighnupState extends State<sighnup> {
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
+class _SignupState extends State<Signup> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
+  final databaseRef =
+      FirebaseDatabase.instance.ref(); // Firebase database reference
 
   bool isLoading = false;
 
@@ -40,13 +44,29 @@ class _sighnupState extends State<sighnup> {
                   size: 50,
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
-                  controller: emailcontroller,
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.person),
+                    hintText: 'Name',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     hintText: 'Email',
@@ -63,13 +83,11 @@ class _sighnupState extends State<sighnup> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
-                  controller: passwordcontroller,
+                  controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
@@ -87,9 +105,7 @@ class _sighnupState extends State<sighnup> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: isLoading
                     ? null
@@ -99,10 +115,20 @@ class _sighnupState extends State<sighnup> {
                             isLoading = true;
                           });
                           try {
-                            await auth.createUserWithEmailAndPassword(
-                              email: emailcontroller.text.trim(),
-                              password: passwordcontroller.text.trim(),
+                            UserCredential userCredential =
+                                await auth.createUserWithEmailAndPassword(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
                             );
+
+                            // Save user-specific data (name, email) in Firebase Database
+                            String userId = userCredential.user!.uid;
+                            await databaseRef.child('users').child(userId).set({
+                              'name': nameController.text.trim(),
+                              'email': emailController.text.trim(),
+                              'createdAt': DateTime.now().toString(),
+                            });
+
                             Fluttertoast.showToast(
                               msg: 'Sign up successful!',
                               backgroundColor: Colors.green,
@@ -146,9 +172,7 @@ class _sighnupState extends State<sighnup> {
                         style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   Navigator.push(

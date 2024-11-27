@@ -52,7 +52,7 @@ class _SplashsrcState extends State<Splashsrc> {
       print('user: $user');
       if (user == null) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => sighnup()));
+            context, MaterialPageRoute(builder: (context) => Signup()));
       } else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const login()));

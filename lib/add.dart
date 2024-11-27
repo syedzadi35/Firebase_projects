@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // For user authentication
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fluttertoast/fluttertoast.dart'; // Import flutter toast package
+import 'package:fluttertoast/fluttertoast.dart'; // For toast notifications
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -13,28 +14,50 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final DatabaseReference databaseRef = FirebaseDatabase.instance.ref('posts');
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance; // Firebase Authentication
+  User? currentUser;
 
-  bool isLoading = false; // State for showing loading spinner
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    currentUser = auth.currentUser; // Get the currently logged-in user
+  }
 
   void addPost() {
+    if (currentUser == null) {
+      Fluttertoast.showToast(
+        msg: "No user is logged in.",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // If no user is logged in, stop the function.
+    }
+
     setState(() {
-      isLoading = true; // Start loading
+      isLoading = true;
     });
 
-    // Generate a unique numeric ID using the current timestamp
     String customId = DateTime.now().millisecondsSinceEpoch.toString();
 
-    // Add data to the database using the custom ID
-    databaseRef.child(customId).set({
+    // Replace '.' in email with '_', this ensures valid Firebase paths
+    String userEmail = currentUser!.email!.replaceAll('.', '_');
+
+    // Save task under the current user's email
+    databaseRef
+        .child(userEmail) // Use the modified email as the path
+        .child(customId)
+        .set({
       'id': customId,
       'title': titleController.text.trim(),
       'description': descriptionController.text.trim(),
     }).then((_) {
       setState(() {
-        isLoading = false; // Stop loading
+        isLoading = false;
       });
 
-      // Show success toast
       Fluttertoast.showToast(
         msg: "Post added successfully!",
         toastLength: Toast.LENGTH_LONG,
@@ -44,13 +67,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
         fontSize: 16.0,
       );
 
-      Navigator.pop(context); // Navigate back to the previous screen
+      Navigator.pop(context);
     }).catchError((error) {
       setState(() {
-        isLoading = false; // Stop loading
+        isLoading = false;
       });
 
-      // Show error toast
       Fluttertoast.showToast(
         msg: "Failed to add post: $error",
         toastLength: Toast.LENGTH_LONG,
@@ -75,26 +97,28 @@ class _AddPostScreenState extends State<AddPostScreen> {
           children: [
             TextField(
               controller: titleController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Title',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Description',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
               ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.yellow),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow,
               ),
-              onPressed:
-                  isLoading ? null : addPost, // Disable button if loading
+              onPressed: isLoading ? null : addPost,
               child: isLoading
                   ? const SizedBox(
                       height: 20,
@@ -104,7 +128,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         strokeWidth: 2,
                       ),
                     )
-                  : const Text('Add Post'),
+                  : const Text(
+                      'Add Post',
+                      style: TextStyle(color: Colors.black),
+                    ),
             ),
           ],
         ),

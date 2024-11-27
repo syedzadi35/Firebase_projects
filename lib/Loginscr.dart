@@ -177,7 +177,7 @@ class _loginState extends State<login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => sighnup()),
+                    MaterialPageRoute(builder: (context) => Signup()),
                   );
                 },
                 child: const Text('Don\'t have an account? Sign up'),
