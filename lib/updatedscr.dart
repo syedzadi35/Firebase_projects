@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:login_firebase/Loginscr.dart';
+import 'package:login_firebase/widgets/bg%20color.dart';
 
 class UpdateTaskScreen extends StatefulWidget {
   const UpdateTaskScreen({
@@ -76,44 +78,83 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Update Task'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                labelText: 'Title',
-                border: OutlineInputBorder(),
+    return Stack(
+      children: [
+        background(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pop(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Login()));
+                          },
+                          child: const Icon(Icons.arrow_back)),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Text(
+                        'Enter your Email',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Title',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.yellow),
+                    ),
+                    onPressed: isUpdating ? null : updateTask,
+                    child: isUpdating
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                            'Update Task',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Description',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.yellow),
-              ),
-              onPressed: isUpdating ? null : updateTask,
-              child: isUpdating
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text('Update Task'),
-            ),
-          ],
-        ),
-      ),
+          ),
+        )
+      ],
     );
   }
 }

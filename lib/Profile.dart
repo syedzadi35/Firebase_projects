@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:login_firebase/Loginscr.dart';
+import 'package:login_firebase/post.dart';
+import 'package:login_firebase/widgets/bg%20color.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -50,27 +53,64 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('User Profile'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Name: ${name ?? "Loading..."}', // Display name or "Loading..." if null
-              style: const TextStyle(color: Colors.black, fontSize: 18),
+    return Stack(
+      children: [
+        const background(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context,
+                                (builder: (context) => const PostScreen()));
+                          },
+                          child: const Icon(Icons.arrow_back)),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Text(
+                        'User Profile',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    'Name: ${name ?? "Loading..."}', // Display name or "Loading..." if null
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Email: ${email ?? "Loading..."}', // Display email or "Loading..." if null
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Email: ${email ?? "Loading..."}', // Display email or "Loading..." if null
-              style: const TextStyle(color: Colors.black, fontSize: 18),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
+
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

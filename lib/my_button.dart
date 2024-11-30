@@ -20,7 +20,11 @@ class _MyButtonState extends State<MyButton> {
           style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(Colors.yellow)),
           onPressed: widget.onButtonpress,
-          child: Text(widget.title)),
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+          )),
     );
   }
 }
