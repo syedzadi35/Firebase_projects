@@ -90,7 +90,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        background(),
+        const background(),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
@@ -126,12 +126,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   TextField(
                     controller: titleController,
                     decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
                           ),
                           borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 245, 231, 110))),
+                              color: Color.fromARGB(255, 245, 231, 110))),
                       labelText: 'Title',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -142,12 +142,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   TextField(
                     controller: descriptionController,
                     decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
                           ),
                           borderSide: BorderSide(
-                              color: const Color.fromARGB(255, 245, 231, 110))),
+                              color: Color.fromARGB(255, 245, 231, 110))),
                       labelText: 'Description',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0)),

@@ -92,10 +92,10 @@ class _PostScreenState extends State<PostScreen> {
       ),
       body: Stack(
         children: [
-          background(),
+          const background(),
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               // Search Bar

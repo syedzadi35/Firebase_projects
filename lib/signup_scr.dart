@@ -97,7 +97,7 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            // Email Field
+
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: TextFormField(
@@ -128,7 +128,7 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            // Password Field
+
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: TextFormField(

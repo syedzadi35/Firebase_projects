@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_firebase/Loginscr.dart';
-
 import 'package:login_firebase/signup_scr.dart';
 import 'package:login_firebase/widgets/bg%20color.dart';
 import 'firebase_options.dart';
@@ -49,11 +48,11 @@ class _SplashsrcState extends State<Splashsrc> {
 
   void moveNextScreen() {
     final user = FirebaseAuth.instance.currentUser;
-    Future.delayed(const Duration(seconds: 7), () {
+    Future.delayed(const Duration(seconds: 5), () {
       print('user: $user');
       if (user == null) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Login()));
+            context, MaterialPageRoute(builder: (context) => const Login()));
       } else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Signup()));

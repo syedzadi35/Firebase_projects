@@ -87,18 +87,46 @@ class _LoginState extends State<Login> {
               child: SafeArea(
                 child: Column(
                   children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      height: 120,
-                      child: const Text(
-                        'Welcome Back\nPlease Log In',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: Colors.white,
+                    Row(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PostScreen()));
+                            },
+                            child: const Icon(Icons.arrow_back)),
+                        const SizedBox(
+                          width: 30,
                         ),
-                      ),
+                        const Text(
+                          'Welcome Back \n Please log in',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
                     ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    // Container(
+
+                    //   alignment: Alignment.topLeft,
+                    //   height: 120,
+                    //   child: const Text(
+                    //     'Welcome Back\nPlease Log In',
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 40,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
                     Center(
                       child: Form(
                         key: _formKey,
@@ -110,7 +138,7 @@ class _LoginState extends State<Login> {
                               backgroundImage:
                                   AssetImage('assets/profile.jpeg'),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 20),
                             // Email Field
                             Padding(
                               padding: const EdgeInsets.all(15.0),

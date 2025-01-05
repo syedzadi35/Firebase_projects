@@ -80,7 +80,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        background(),
+        const background(),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
@@ -102,7 +102,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                         width: 30,
                       ),
                       const Text(
-                        'Enter your Email',
+                        'Edit Your Task',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter login page',
+      title: 'To Do App',
       theme: ThemeData(
         primaryColor: Colors.yellow,
         brightness: Brightness.light,

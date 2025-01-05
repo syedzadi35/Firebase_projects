@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_firebase/Loginscr.dart';
 import 'package:login_firebase/my_button.dart';
-import 'package:login_firebase/post.dart';
 import 'package:login_firebase/widgets/bg%20color.dart';
 
 class forgot extends StatefulWidget {
@@ -26,7 +25,7 @@ class _forgotState extends State<forgot> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 Row(
